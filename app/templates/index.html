@@ -4,8 +4,20 @@
     <title>{{ title }}</title>
 </head>
 <body>
-    <div>
-        {{ myContent }}
-    </div>
+    {% set navlist = [
+        ('/', 'index', 'Index'),
+        ('/poducts', 'products', 'Products'),
+        ('/accounts', 'account', 'Account')
+    ] -%}
+    <nav>
+        <ul>
+            {% for href, id, caption in navlist %}
+                <li><a id="{{ id|e }}" href="{{ href|e }}">{{ caption|e }}</a></li>
+            {% endfor %}
+        </ul>
+    </nav>
+    <p>
+        Some content
+    </p>
 </body>
 </html>

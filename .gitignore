@@ -133,3 +133,4 @@ Pipfile.lock
 
 # Visual Studio Code
 .vscode
+config.py
