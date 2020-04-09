@@ -134,3 +134,6 @@ Pipfile.lock
 # Visual Studio Code
 .vscode
 config.py
+
+# Other things
+*.pyc
