@@ -21,3 +21,7 @@ def route_signin():
 @app.route("/signout", methods=["POST"])
 def route_signout():
     return Controller(get_connection(), app).handle_signout()
+
+@app.route("/user", methods=["GET"])
+def route_user():
+    return Controller(get_connection(), app).handle_user()

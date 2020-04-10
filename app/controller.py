@@ -59,3 +59,12 @@ class Controller():
         session['logged_in'] = False
         session.pop('username', None)
         return jsonify({"result" : "signout successful"})
+
+    def handle_user(self):
+        try:
+            if "logged_in" not in session or session['logged_in'] != True or "username" not in session:
+                return jsonify({"error" : "you must be logged in"})
+            return jsonify({"result" : {"username" : session["username"]}})
+        except Exception as e:
+            print(e)
+            return jsonify({"error" : "internal error"})
