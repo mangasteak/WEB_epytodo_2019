@@ -54,3 +54,8 @@ class Controller():
             return jsonify({"error" : "login or password does not match"})
         except:
             return jsonify({"error" : "internal error"})
+
+    def handle_signout(self):
+        session['logged_in'] = False
+        session.pop('username', None)
+        return jsonify({"result" : "signout successful"})
