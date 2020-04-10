@@ -1,5 +1,5 @@
 from app import *
-from flask import jsonify, session, request
+from flask import *
 from app.models import Models
 import hashlib
 
@@ -8,7 +8,7 @@ class Controller():
         self.app = app
         self.connection = connection
 
-    def is_connected(self, session=None):
+    def is_connected(self, session):
         try:
             if session['logged_in'] == True:
                 return True
@@ -32,5 +32,25 @@ class Controller():
                 return jsonify({"error" : "account already exists"})
             models.create_account(username, password)
             return jsonify({"result" : "account created"})
+        except:
+            return jsonify({"error" : "internal error"})
+
+    def handle_signin(self, request):
+        try:
+            username = request.args["username"]
+            password = request.args["password"]
+            salt = "BEST_SALT" + username
+            hash = hashlib.sha512()
+            hash.update(salt.encode())
+            hash.update(password.encode())
+            password = hash.hexdigest()
+            if self.is_connected(session) == True:
+                return jsonify({"error" : "internal error"})
+            models = Models()
+            if models.pwd_and_usr_match(username, password):
+                session['logged_in'] = True
+                session['username'] = username
+                return jsonify({"result" : "signin successful"})
+            return jsonify({"error" : "login or password does not match"})
         except:
             return jsonify({"error" : "internal error"})

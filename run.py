@@ -2,4 +2,5 @@
 
 from app import app
 
+app.secret_key = "very_secret_key"
 app.run()

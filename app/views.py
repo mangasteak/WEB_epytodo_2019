@@ -13,3 +13,7 @@ def route_index():
 @app.route("/register", methods=["POST"])
 def route_register():
     return Controller(get_connection(), app).handle_register(request)
+
+@app.route("/signin", methods=["POST"])
+def route_signin():
+    return Controller(get_connection(), app).handle_signin(request)
