@@ -25,3 +25,8 @@ def route_signout():
 @app.route("/user", methods=["GET"])
 def route_user():
     return Controller(get_connection(), app).handle_user()
+
+@app.route("/user/task/<id>", methods=["GET", "POST"])
+def route_user_task_id(id):
+    if request.method == "GET":
+        return Controller(get_connection(), app).handle_user_task_id_get(id)

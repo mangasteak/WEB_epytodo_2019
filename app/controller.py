@@ -65,6 +65,35 @@ class Controller():
             if "logged_in" not in session or session['logged_in'] != True or "username" not in session:
                 return jsonify({"error" : "you must be logged in"})
             return jsonify({"result" : {"username" : session["username"]}})
-        except Exception as e:
-            print(e)
+        except:
+            return jsonify({"error" : "internal error"})
+
+    def user_has_task(self, id, username):
+        models = Models()
+        usr_id = models.get_usr_id(username)[0][0]
+        return models.usr_has_task(usr_id, id)
+
+    def id_to_status(self, id):
+        possible_ids = [0, 1, 2]
+        if id not in possible_ids:
+            return "error"
+        if id == 0:
+            return "not started"
+        elif id == 1:
+            return "in progress"
+        else:
+            return "done"
+
+    def handle_user_task_id_get(self, id):
+        try:
+            if "logged_in" not in session or session['logged_in'] != True or "username" not in session:
+                return jsonify({"error" : "you must be logged in"})
+            models = Models()
+            if not models.task_exist(id):
+                return jsonify({"error" : "task id does not exist"})
+            if not self.user_has_task(id, session['username']):
+                return jsonify({"error" : "not your task lmao"})
+            task = models.get_task_info(id)
+            return jsonify({"result" : {"title" : str(task[1]), "begin" : str(task[2]), "end" : str(task[3]), "status" : self.id_to_status(int(task[4]))}})
+        except:
             return jsonify({"error" : "internal error"})

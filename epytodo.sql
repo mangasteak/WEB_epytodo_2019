@@ -12,8 +12,8 @@ CREATE TABLE IF NOT EXISTS task
     (
         task_id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
         title CHAR(60) NOT NULL,
-        begin DATE,
-        end DATE,
+        begin DATETIME,
+        end DATETIME,
         status INT
     );
 
