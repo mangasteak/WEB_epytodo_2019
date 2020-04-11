@@ -117,3 +117,20 @@ class Controller():
             return jsonify({"result" : "update done"})
         except:
             return jsonify({"error" : "internal error"})
+
+    def handle_user_task_add(self, request):
+        try:
+            if "logged_in" not in session or session['logged_in'] != True or "username" not in session:
+                return jsonify({"error" : "you must be logged in"})
+            models = Models()
+            if "title" not in request.args or "begin" not in request.args or "end" not in request.args or "status" not in request.args:
+                return jsonify({"error" : "internal error"})
+            title = request.args["title"]
+            begin = request.args["begin"]
+            end = request.args["end"]
+            status = request.args["status"]
+            id = models.add_task(title, begin, end, status)
+            models.link_task_usr(id, models.get_usr_id(session["username"])[0][0])
+            return jsonify({"result" : "new task added"})
+        except:
+            return jsonify({"error" : "internal error"})

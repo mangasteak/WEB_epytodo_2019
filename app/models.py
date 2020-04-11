@@ -67,3 +67,17 @@ class Models():
         cursor.execute("UPDATE task SET title = '%s', begin = '%s', end = '%s', status = '%s' WHERE task_id = '%s'"% (title, begin, end, status, id))
         self.connection.commit()
         cursor.close()
+
+    def add_task(self, title, begin, end, status):
+        cursor = self.connection.cursor()
+        cursor.execute("INSERT INTO task (title, begin, end, status) VALUES ('%s', '%s', '%s', '%s')"% (title, begin, end, status))
+        self.connection.commit()
+        id = cursor.lastrowid
+        cursor.close()
+        return id
+
+    def link_task_usr(self, id, usr_id):
+        cursor = self.connection.cursor()
+        cursor.execute("INSERT INTO user_has_task (fk_user_id, fk_task_id) VALUES ('%s', '%s')"% (usr_id, id))
+        self.connection.commit()
+        cursor.close()
