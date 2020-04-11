@@ -93,3 +93,10 @@ class Models():
         cursor.execute("DELETE FROM user_has_task WHERE fk_task_id = '%s'"% (id))
         self.connection.commit()
         cursor.close()
+
+    def get_user_tasks(self, usr_id):
+        cursor = self.connection.cursor()
+        cursor.execute("SELECT * FROM user_has_task WHERE fk_user_id = '%s'"% (usr_id))
+        result = cursor.fetchall()
+        cursor.close()
+        return result

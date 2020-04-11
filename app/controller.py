@@ -149,3 +149,19 @@ class Controller():
             return jsonify({"result" : "task deleted"})
         except:
             return jsonify({"error" : "internal error"})
+
+    def handle_user_task(self):
+        try:
+            if "logged_in" not in session or session['logged_in'] != True or "username" not in session:
+                return jsonify({"error" : "you must be logged in"})
+            models = Models()
+            tasks_id = []
+            tasks = []
+            for i in models.get_user_tasks(models.get_usr_id(session["username"])[0][0]):
+                tasks_id.append(i[1])
+            for i in tasks_id:
+                tmp = models.get_task_info(i)
+                tasks.append({str(i) : {"title" : str(tmp[1]), "begin" : str(tmp[2]), "end" : str(tmp[3]), "status" : self.id_to_status(int(tmp[4]))}})
+            return jsonify({"result" : {"tasks" : tasks}})
+        except:
+            return jsonify({"error" : "internal error"})

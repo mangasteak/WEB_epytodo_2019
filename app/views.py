@@ -39,3 +39,7 @@ def route_user_task_add():
 @app.route("/user/task/del/<id>", methods=["POST"])
 def route_user_task_del_id(id):
     return Controller(get_connection(), app).handle_user_task_del(id)
+
+@app.route("/user/task", methods=["GET"])
+def route_user_task():
+    return Controller(get_connection(), app).handle_user_task()
