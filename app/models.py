@@ -81,3 +81,15 @@ class Models():
         cursor.execute("INSERT INTO user_has_task (fk_user_id, fk_task_id) VALUES ('%s', '%s')"% (usr_id, id))
         self.connection.commit()
         cursor.close()
+
+    def delete_task(self, id):
+        cursor = self.connection.cursor()
+        cursor.execute("DELETE FROM task WHERE task_id = '%s'"% (id))
+        self.connection.commit()
+        cursor.close()
+
+    def delete_task_link(self, id):
+        cursor = self.connection.cursor()
+        cursor.execute("DELETE FROM user_has_task WHERE fk_task_id = '%s'"% (id))
+        self.connection.commit()
+        cursor.close()

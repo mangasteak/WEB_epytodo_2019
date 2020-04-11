@@ -134,3 +134,18 @@ class Controller():
             return jsonify({"result" : "new task added"})
         except:
             return jsonify({"error" : "internal error"})
+
+    def handle_user_task_del(self, id):
+        try:
+            if "logged_in" not in session or session['logged_in'] != True or "username" not in session:
+                return jsonify({"error" : "you must be logged in"})
+            models = Models()
+            if not models.task_exist(id):
+                return jsonify({"error" : "task id does not exist"})
+            if not self.user_has_task(id, session['username']):
+                return jsonify({"error" : "not your task lmao"})
+            models.delete_task_link(id)
+            models.delete_task(id)
+            return jsonify({"result" : "task deleted"})
+        except:
+            return jsonify({"error" : "internal error"})
