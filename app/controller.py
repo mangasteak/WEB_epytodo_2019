@@ -97,3 +97,23 @@ class Controller():
             return jsonify({"result" : {"title" : str(task[1]), "begin" : str(task[2]), "end" : str(task[3]), "status" : self.id_to_status(int(task[4]))}})
         except:
             return jsonify({"error" : "internal error"})
+
+    def handle_user_task_id_post(self, id, request):
+        try:
+            if "logged_in" not in session or session['logged_in'] != True or "username" not in session:
+                return jsonify({"error" : "you must be logged in"})
+            models = Models()
+            if not models.task_exist(id):
+                return jsonify({"error" : "task id does not exist"})
+            if not self.user_has_task(id, session['username']):
+                return jsonify({"error" : "not your task lmao"})
+            if "title" not in request.args or "begin" not in request.args or "end" not in request.args or "status" not in request.args:
+                return jsonify({"error" : "internal error"})
+            title = request.args["title"]
+            begin = request.args["begin"]
+            end = request.args["end"]
+            status = request.args["status"]
+            models.update_task(id, title, begin, end, status)
+            return jsonify({"result" : "update done"})
+        except:
+            return jsonify({"error" : "internal error"})

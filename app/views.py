@@ -30,3 +30,4 @@ def route_user():
 def route_user_task_id(id):
     if request.method == "GET":
         return Controller(get_connection(), app).handle_user_task_id_get(id)
+    return Controller(get_connection(), app).handle_user_task_id_post(id, request)

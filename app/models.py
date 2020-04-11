@@ -61,3 +61,9 @@ class Models():
         result = cursor.fetchall()[0]
         cursor.close()
         return result
+
+    def update_task(self, id, title, begin, end, status):
+        cursor = self.connection.cursor()
+        cursor.execute("UPDATE task SET title = '%s', begin = '%s', end = '%s', status = '%s' WHERE task_id = '%s'"% (title, begin, end, status, id))
+        self.connection.commit()
+        cursor.close()
