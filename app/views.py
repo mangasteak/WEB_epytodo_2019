@@ -6,9 +6,7 @@ from app.controller import Controller
 
 @app.route("/", methods=["GET"])
 def route_index():
-    return render_template("index.html",
-                            title="Some title",
-                            myContent="Some content")
+    return render_template("index.html")
 
 @app.route("/register", methods=["POST"])
 def route_register():

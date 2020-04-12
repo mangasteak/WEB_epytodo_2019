@@ -1,23 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>{{ title }}</title>
+    <title>EPyTodo</title>
 </head>
 <body>
-    {% set navlist = [
-        ('/', 'index', 'Index'),
-        ('/poducts', 'products', 'Products'),
-        ('/accounts', 'account', 'Account')
-    ] -%}
-    <nav>
-        <ul>
-            {% for href, id, caption in navlist %}
-                <li><a id="{{ id|e }}" href="{{ href|e }}">{{ caption|e }}</a></li>
-            {% endfor %}
-        </ul>
-    </nav>
-    <p>
-        Some content
-    </p>
+    <img src="{{url_for('static', filename='doge.jpg')}}">
 </body>
 </html>
